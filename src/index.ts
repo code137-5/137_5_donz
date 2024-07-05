@@ -1,4 +1,4 @@
-import * as P5 from "p5";
+import P5 from "p5";
 import Mover from "./mover";
 
 const sketch = (p5: P5) => {
@@ -10,7 +10,7 @@ const sketch = (p5: P5) => {
     canvas.parent("app");
 
     // Configuring the canvas
-    p5.background("white");
+    p5.background("black");
   };
 
   // The sketch draw method
