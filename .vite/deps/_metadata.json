@@ -1,8 +1,15 @@
 {
-  "hash": "63120541",
+  "hash": "e48a9176",
   "configHash": "022e816d",
-  "lockfileHash": "60f1474e",
-  "browserHash": "b0fb3eb2",
-  "optimized": {},
+  "lockfileHash": "4ad85bf4",
+  "browserHash": "6ec781f1",
+  "optimized": {
+    "p5": {
+      "src": "../../.yarn/cache/p5-npm-1.9.4-643addebdd-a7d05837cf.zip/node_modules/p5/lib/p5.min.js",
+      "file": "p5.js",
+      "fileHash": "94bdf07c",
+      "needsInterop": true
+    }
+  },
   "chunks": {}
 }
