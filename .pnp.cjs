@@ -28,6 +28,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
+            ["@types/p5", "npm:1.7.6"],\
+            ["p5", "npm:1.9.4"],\
             ["typescript", "patch:typescript@npm%3A5.5.3#~builtin<compat/typescript>::version=5.5.3&hash=29ae49"],\
             ["vite", "virtual:50c390d9c7121602da87136f1706c339933d32e251b5770099e393240965f6b85f800b60b230e9d6438ba9815cb60220e46cd711445aac4753217ed67691f4f3#npm:5.3.3"],\
             ["vite-tsconfig-paths", "virtual:50c390d9c7121602da87136f1706c339933d32e251b5770099e393240965f6b85f800b60b230e9d6438ba9815cb60220e46cd711445aac4753217ed67691f4f3#npm:4.3.2"]\
@@ -448,6 +450,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-estree-npm-1.0.5-5b7faed3b4-dd8b5bed28.zip/node_modules/@types/estree/",\
           "packageDependencies": [\
             ["@types/estree", "npm:1.0.5"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/p5", [\
+        ["npm:1.7.6", {\
+          "packageLocation": "./.yarn/cache/@types-p5-npm-1.7.6-603abeca05-a733b4f0a7.zip/node_modules/@types/p5/",\
+          "packageDependencies": [\
+            ["@types/p5", "npm:1.7.6"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -1120,6 +1131,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["p5", [\
+        ["npm:1.9.4", {\
+          "packageLocation": "./.yarn/cache/p5-npm-1.9.4-643addebdd-a7d05837cf.zip/node_modules/p5/",\
+          "packageDependencies": [\
+            ["p5", "npm:1.9.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["package-json-from-dist", [\
         ["npm:1.0.0", {\
           "packageLocation": "./.yarn/cache/package-json-from-dist-npm-1.0.0-961f0fcb3b-ac706ec856.zip/node_modules/package-json-from-dist/",\
@@ -1498,6 +1518,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["vite-berry", "workspace:."],\
+            ["@types/p5", "npm:1.7.6"],\
+            ["p5", "npm:1.9.4"],\
             ["typescript", "patch:typescript@npm%3A5.5.3#~builtin<compat/typescript>::version=5.5.3&hash=29ae49"],\
             ["vite", "virtual:50c390d9c7121602da87136f1706c339933d32e251b5770099e393240965f6b85f800b60b230e9d6438ba9815cb60220e46cd711445aac4753217ed67691f4f3#npm:5.3.3"],\
             ["vite-tsconfig-paths", "virtual:50c390d9c7121602da87136f1706c339933d32e251b5770099e393240965f6b85f800b60b230e9d6438ba9815cb60220e46cd711445aac4753217ed67691f4f3#npm:4.3.2"]\

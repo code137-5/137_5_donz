@@ -328,6 +328,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/p5@npm:^1.7.6":
+  version: 1.7.6
+  resolution: "@types/p5@npm:1.7.6"
+  checksum: a733b4f0a77d68e51f6e958eea7a59d1a48a365d4d04d23b94ef55c4b133a474a0e5ce48da0a22f13aa48c64271025af342df3e12525da493cb4565d4e41c8e1
+  languageName: node
+  linkType: hard
+
 "abbrev@npm:^2.0.0":
   version: 2.0.0
   resolution: "abbrev@npm:2.0.0"
@@ -981,6 +988,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"p5@npm:^1.9.4":
+  version: 1.9.4
+  resolution: "p5@npm:1.9.4"
+  checksum: a7d05837cfdc7ca10efd82b5498e5b4d90e38837f3b5ebe1f12c032d248a792102c434273ec8906441ddb91b2699bddbdb8acfa6ba7ea563127d7b76626a8f6d
+  languageName: node
+  linkType: hard
+
 "package-json-from-dist@npm:^1.0.0":
   version: 1.0.0
   resolution: "package-json-from-dist@npm:1.0.0"
@@ -1317,6 +1331,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "vite-berry@workspace:."
   dependencies:
+    "@types/p5": ^1.7.6
+    p5: ^1.9.4
     typescript: ^5.2.2
     vite: ^5.3.1
     vite-tsconfig-paths: ^4.3.2
