@@ -11,7 +11,7 @@ class Star {
     this.x = this.random(1, width);
     this.y = this.random(1, height);
     this.size = this.random(3, 5);
-    this.alpha = this.random(150, 255);
+    this.alpha = this.random(100, 255);
   }
 
   private random(min: number, max: number) {
