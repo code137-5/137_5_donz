@@ -25,6 +25,7 @@ dist-ssr
 *.sw?
 
 .vite/*
+build/
 
 .yarn/*
 .yarn/cache
