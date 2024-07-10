@@ -10,7 +10,7 @@ export default defineConfig({
   },
   build: {
     outDir: "build",
-    rollupOption: {
+    rollupOptions: {
       output: {
         assetFileNames: (asset) => {
           const isCssFile = /\.css$/.test(asset.name);

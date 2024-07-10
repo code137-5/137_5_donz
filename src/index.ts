@@ -6,10 +6,16 @@ import Whale from "./whale";
 let stars: Star[] = [];
 let whale: Whale;
 
-function drawStar(p5: p5, cnt: number) {
+function drawStars(p5: p5, cnt: number) {
   for (let i = 0; i < cnt; i++) {
     const star: Star = new Star(p5, window.innerWidth, window.innerHeight);
     stars.push(star);
+  }
+}
+
+function updateStars(x: number, y: number) {
+  for (let star of stars) {
+    star.updatePosition(x, y);
   }
 }
 
@@ -19,11 +25,12 @@ const sketch = (p5: p5) => {
     canvas.parent("app");
 
     p5.background("#041636"); // 어두운 파란색 배경 (밤 하늘)
-    //p5.noLoop(); // draw 함수가 한 번만 실행되도록 설정
 
+    // 고래 생성
     whale = new Whale(p5);
 
-    drawStar(p5, window.innerWidth);
+    // 초기 별 생성
+    drawStars(p5, window.innerWidth);
   };
 
   p5.draw = () => {
@@ -34,6 +41,9 @@ const sketch = (p5: p5) => {
     }
 
     whale.draw();
+    whale.updatePosition();
+
+    updateStars(whale.x, whale.y);
   };
 };
 
