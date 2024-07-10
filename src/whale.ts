@@ -13,6 +13,8 @@ export default class Whale {
 
   speedY: number;
 
+  tailDirection: number;
+
   constructor(p5: p5) {
     this.p5 = p5;
     this._size = 50;
@@ -20,11 +22,21 @@ export default class Whale {
     this.y = window.innerHeight / 2;
     this.speedX = 0.5;
     this.speedY = 1;
+
+    this.tailDirection = 1;
   }
 
   draw() {
     this.p5.noStroke();
+
     this.p5.ellipse(this.x, this.y, 100, 100);
+
+    // 꼬리
+    for (let i = 1; i < 4; i++) {
+      let tailX = this.x - this.speedX * 40 * i; // 꼬리 x 위치 계산 (고래의 속도와 반대 방향)
+      let tailY = this.y - this.speedY * 40 * i;
+      this.p5.ellipse(tailX, tailY, 50 / i, 50 / i);
+    }
   }
 
   updatePosition() {
