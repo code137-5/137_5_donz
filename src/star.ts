@@ -28,16 +28,23 @@ class Star {
   }
 
   updatePosition(x: number, y: number) {
-    let d = this.p5.dist(x, y, this.x, this.y);
+    // 고래와 별 사이의 거리 계산
+    let dx = x - this.x;
+    let dy = y - this.y;
+    let distance = this.p5.sqrt(dx * dx + dy * dy);
 
     // 반경 50px 내에 별을 그리지 않는다
-    if (d < 50) {
-      this.x = x + 50;
-      this.y = x + 50;
+    if (distance < 80) {
+      // 공에서 별로 향하는 벡터의 단위벡터를 구합니다.
+      let unitX = dx / distance;
+      let unitY = dy / distance;
+      // 별의 위치를 공과 반대 방향으로 조정합니다.
+      this.x -= unitX * 2;
+      this.y -= unitY * 2;
     } else {
       // 원상복구
-      this.x = this.originX;
-      this.y = this.originY;
+      this.x += (this.originX - this.x) * 0.05;
+      this.y += (this.originY - this.y) * 0.05;
     }
   }
 }

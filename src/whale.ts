@@ -5,71 +5,44 @@ export default class Whale {
 
   _size: number;
 
-  start_point: number;
+  x: number;
+
+  y: number;
+
+  speedX: number;
+
+  speedY: number;
 
   constructor(p5: p5) {
     this.p5 = p5;
     this._size = 50;
-    this.start_point = window.innerWidth / 3;
-  }
-
-  // 화면의 중앙에서 그린다.
-  private makeHead() {
-    this.p5.stroke("magenta");
-
-    this.p5.beginShape();
-    this.p5.vertex(this.start_point, 100); // Top-left
-    this.p5.vertex(this.start_point + 150, 100); // Top-right
-    this.p5.vertex(this.start_point + 200, 250); // Bottom-right
-    this.p5.vertex(this.start_point - 50, 250); // Bottom-left
-    this.p5.endShape();
-  }
-
-  private makeLeftPin() {
-    this.p5.stroke("cyan");
-    this.p5.beginShape();
-    this.p5.vertex(this.start_point - 35, 300); // Bottom-right
-    this.p5.vertex(this.start_point - 120, 380); // Bottom-left
-    this.p5.vertex(this.start_point - 5, 400); // Top-left
-    this.p5.endShape();
-  }
-
-  private makeRightPin() {
-    this.p5.stroke("cyan");
-
-    this.p5.beginShape();
-    this.p5.vertex(this.start_point + 185, 300); // Bottom-right
-    this.p5.vertex(this.start_point + 280, 380); // Bottom-left
-    this.p5.vertex(this.start_point + 160, 400); // Top-left
-    this.p5.endShape();
-  }
-
-  private makeAbdomen() {
-    this.p5.stroke("lime");
-    this.p5.beginShape();
-    this.p5.vertex(this.start_point - 50, 250);
-    this.p5.vertex(this.start_point + 200, 250);
-
-    this.p5.vertex(this.start_point + 80, 700);
-    this.p5.endShape();
-  }
-
-  private makeTail() {
-    this.p5.stroke("yellow");
-    this.p5.beginShape();
-    this.p5.vertex(this.start_point + 80, 700);
-    this.p5.vertex(this.start_point, 750);
-    this.p5.vertex(this.start_point + 160, 750);
-    this.p5.endShape();
+    this.x = window.innerWidth / 2;
+    this.y = window.innerHeight / 2;
+    this.speedX = 0.5;
+    this.speedY = 1;
   }
 
   draw() {
-    // 고래의 꼬리 그리기
+    this.p5.noStroke();
+    this.p5.ellipse(this.x, this.y, 100, 100);
+  }
 
-    this.makeHead();
-    this.makeLeftPin();
-    this.makeRightPin();
-    this.makeAbdomen();
-    this.makeTail();
+  updatePosition() {
+    // 공의 다음 위치 계산
+    let nextX = this.x + this.speedX;
+    let nextY = this.y + this.speedY;
+
+    // 벽과의 충돌 체크
+    if (nextX < 50 || nextX > window.innerWidth - 50) {
+      this.speedX *= -1; // x축 방향 반전
+    }
+
+    if (nextY < 50 || nextY > window.innerHeight - 50) {
+      this.speedY *= -1; // y축 방향 반전
+    }
+
+    // 공 위치 업데이트
+    this.x += this.speedX;
+    this.y += this.speedY;
   }
 }
