@@ -9,7 +9,6 @@
 ## Built with
 
 - vite: ^5.3.1
-- yarn: 3.6.4
 - typescript: ^5.2.2
 
 ## Installation
@@ -23,13 +22,13 @@ https://github.com/code137-5/nature-of-code-example.git
 2. install libraries needed for this project.
 
 ```bash
-yarn install
+npm install
 ```
 
 3. start project
 
 ```bash
-yarn dev
+npm run dev
 ```
 
 ## reference
