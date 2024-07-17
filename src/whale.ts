@@ -6,9 +6,7 @@ export default class Whale {
 
   _size: number;
 
-  x: number;
-
-  y: number;
+  wPos: p5.Vector;
 
   speedX: number;
 
@@ -23,54 +21,61 @@ export default class Whale {
   constructor(p5: p5) {
     this.p5 = p5;
     this._size = 50;
-    this.x = window.innerWidth / 2;
-    this.y = window.innerHeight / 2;
+    this.wPos = p5.createVector(100, 100);
     this.speedX = 0.5;
     this.speedY = 1;
 
     this.tailDirection = 1;
 
-    this.fins = [];
+    this.fins = [new Fin(this.p5, this.wPos.x, this.wPos.y, this._size)];
 
-    this.boundary = 30;
+    this.boundary = 10;
   }
 
   draw() {
     this.p5.noStroke();
-
-    this.fins.forEach((f, i) => {
-      let tailX = this.x - this.speedX * 40 * i;
-      let tailY = this.y - this.speedY * 40 * i;
-      f.draw(tailX, tailY);
-    });
+    this.updatePosition();
   }
 
   getFins() {
-    for (let i = 1; i < 5; i++) {
-      let tailX = this.x - this.speedX * 40 * i;
-      let tailY = this.y - this.speedY * 40 * i;
+    for (let i = 1; i < 4; i++) {
+      const { p5, pos, w } = this.fins[i - 1];
+      const prevSize = i === 1 ? 0 : w;
 
-      const f = new Fin(this.p5, tailX, tailY, i);
-      this.fins.push(f);
+      this.fins.push(
+        new Fin(p5, pos.x + prevSize, pos.y + prevSize, this._size + i * i)
+      );
     }
+
+    this.fins.reverse();
   }
 
   updatePosition() {
-    // 공의 다음 위치 계산
-    let nextX = this.x + this.speedX;
-    let nextY = this.y + this.speedY;
+    // 공 위치 업데이트
+    this.wPos.add(this.speedX, this.speedY);
 
     // 벽과의 충돌 체크
-    if (nextX < this.boundary || nextX > window.innerWidth - this.boundary) {
+    if (
+      this.wPos.x < this.boundary ||
+      this.wPos.x > window.innerWidth - this.boundary
+    ) {
       this.speedX *= -1; // x축 방향 반전
     }
 
-    if (nextY < this.boundary || nextY > window.innerHeight - this.boundary) {
+    if (
+      this.wPos.y < this.boundary ||
+      this.wPos.y > window.innerHeight - this.boundary
+    ) {
       this.speedY *= -1; // y축 방향 반전
     }
 
-    // 공 위치 업데이트
-    this.x += this.speedX;
-    this.y += this.speedY;
+    this.fins.forEach((f, i) => {
+      if (i > 0) {
+        const frontFin = this.fins[i - 1];
+        f.update(frontFin.pos.x, frontFin.pos.y);
+      } else {
+        this.fins[0].update(this.wPos.x, this.wPos.y);
+      }
+    });
   }
 }

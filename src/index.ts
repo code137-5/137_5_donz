@@ -44,7 +44,7 @@ const sketch = (p5: p5) => {
     whale.draw();
     whale.updatePosition();
 
-    updateStars(whale.x, whale.y);
+    updateStars(whale.fins[0].pos.x, whale.fins[0].pos.y);
   };
 };
 
