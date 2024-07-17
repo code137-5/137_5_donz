@@ -28,6 +28,7 @@ const sketch = (p5: p5) => {
 
     // 고래 생성
     whale = new Whale(p5);
+    whale.getFins();
 
     // 초기 별 생성
     drawStars(p5, window.innerWidth);

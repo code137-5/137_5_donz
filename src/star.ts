@@ -37,7 +37,7 @@ class Star {
     let distance = this.p5.sqrt(dx * dx + dy * dy);
 
     // 반경 50px 내에 별을 그리지 않는다
-    if (distance < 80) {
+    if (distance < 50) {
       // 공에서 별로 향하는 벡터의 단위벡터를 구합니다.
       let unitX = dx / distance;
       let unitY = dy / distance;
