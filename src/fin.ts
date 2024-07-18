@@ -25,11 +25,11 @@ class Fin {
   draw() {
     this.p5.circle(this.pos.x, this.pos.y, this.w);
   }
-  update(x: number, y: number) {
+  update(x: number, y: number, isTail?: boolean) {
     // 현재 움직이는 위치와 fin위치간 거리의 차이를 구한다.
     const target = this.p5.createVector(x, y);
     const dir = p5.Vector.sub(target, this.pos);
-    dir.setMag(this.w);
+    dir.setMag(isTail ? this.w - 30 : this.w);
     dir.mult(-1);
     // 현재 움직이는 위치가 어디로 향하는지, 각도를 구한다.
     this.angle = dir.heading();
@@ -37,7 +37,7 @@ class Fin {
     this.pos = p5.Vector.add(target, dir);
 
     // this.p5.circle(this.pos.x, this.pos.y, this.w);
-    this.plotBody();
+    this.plotBody(isTail);
   }
 
   setMargin(a: number) {
@@ -54,16 +54,17 @@ class Fin {
 
   // plotSide() {}
 
-  plotBody() {
+  plotBody(isTail?: boolean) {
     // 사다리꼴의 상하 여백 및 앞/뒤 너비 설정
     let margin = this.segMargin;
     let widthFront = this.segFrontW;
     let widthBack = this.segBackW;
 
     // 현재 위치에서 각도에 따른 이동된 위치 계산
+    const h = isTail ? 20 : 50;
     const arg2 = this.p5.createVector(0, 0);
-    const dx = 50 * this.p5.cos(this.angle);
-    const dy = 50 * this.p5.sin(this.angle);
+    const dx = h * this.p5.cos(this.angle);
+    const dy = h * this.p5.sin(this.angle);
 
     // 현재 위치에서 this.angle 각도로 거리 50 만큼 떨어진 점의 위치를 계산
     arg2.set(this.pos.x + dx, this.pos.y + dy);
@@ -101,18 +102,33 @@ class Fin {
       // 회전된 사다리꼴의 각 점을 원래 위치 this.pos로 이동
       trapPoints[i].add(this.pos);
     }
+    this.p5.fill(255, 200);
+    this.p5.noStroke();
 
-    // 사다리꼴
-    this.p5.quad(
-      trapPoints[0].x,
-      trapPoints[0].y,
-      trapPoints[1].x,
-      trapPoints[1].y,
-      trapPoints[2].x,
-      trapPoints[2].y,
-      trapPoints[3].x,
-      trapPoints[3].y
-    );
+    // // 사다리꼴
+    // this.p5.quad(
+    //   trapPoints[0].x,
+    //   trapPoints[0].y,
+    //   trapPoints[1].x,
+    //   trapPoints[1].y,
+    //   trapPoints[2].x,
+    //   trapPoints[2].y,
+    //   trapPoints[3].x,
+    //   trapPoints[3].y
+    // );
+
+    // curveTightness 설정
+    this.p5.curveTightness(0.5);
+
+    // 둥근 사다리꼴 그리기
+    this.p5.beginShape();
+    for (let i = 0; i < trapPoints.length; i++) {
+      this.p5.curveVertex(trapPoints[i].x, trapPoints[i].y);
+    }
+    // 마지막 점은 시작점을 위해 반복
+    this.p5.curveVertex(trapPoints[0].x, trapPoints[0].y);
+    this.p5.curveVertex(trapPoints[1].x, trapPoints[1].y);
+    this.p5.endShape(this.p5.CLOSE);
   }
 }
 
