@@ -86,7 +86,7 @@ export default class Whale {
     this.fins.forEach((f, i) => {
       if (i > 0) {
         const prevFin = this.fins[i - 1];
-        f.update(prevFin.pos.x, prevFin.pos.y, i === this.numFin - 1);
+        f.update(prevFin.pos.x, prevFin.pos.y, i === this.numFin - 1, i);
       } else {
         this.fins[0].update(this.wPos.x, this.wPos.y);
       }

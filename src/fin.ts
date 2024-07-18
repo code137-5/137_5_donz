@@ -1,4 +1,5 @@
 import p5 from "p5";
+import { random } from ".";
 
 class Fin {
   p5: p5;
@@ -25,19 +26,18 @@ class Fin {
   draw() {
     this.p5.circle(this.pos.x, this.pos.y, this.w);
   }
-  update(x: number, y: number, isTail?: boolean) {
+  update(x: number, y: number, isTail?: boolean, idx?: number) {
     // 현재 움직이는 위치와 fin위치간 거리의 차이를 구한다.
     const target = this.p5.createVector(x, y);
     const dir = p5.Vector.sub(target, this.pos);
     dir.setMag(isTail ? this.w - 30 : this.w);
     dir.mult(-1);
+
     // 현재 움직이는 위치가 어디로 향하는지, 각도를 구한다.
     this.angle = dir.heading();
-
     this.pos = p5.Vector.add(target, dir);
 
-    // this.p5.circle(this.pos.x, this.pos.y, this.w);
-    this.plotBody(isTail);
+    this.plotBody(isTail, idx);
   }
 
   setMargin(a: number) {
@@ -52,9 +52,7 @@ class Fin {
     this.segBackW = a;
   }
 
-  // plotSide() {}
-
-  plotBody(isTail?: boolean) {
+  plotBody(isTail?: boolean, idx?: number) {
     // 사다리꼴의 상하 여백 및 앞/뒤 너비 설정
     let margin = this.segMargin;
     let widthFront = this.segFrontW;
@@ -105,30 +103,85 @@ class Fin {
     this.p5.fill(255, 200);
     this.p5.noStroke();
 
-    // // 사다리꼴
-    // this.p5.quad(
-    //   trapPoints[0].x,
-    //   trapPoints[0].y,
-    //   trapPoints[1].x,
-    //   trapPoints[1].y,
-    //   trapPoints[2].x,
-    //   trapPoints[2].y,
-    //   trapPoints[3].x,
-    //   trapPoints[3].y
-    // );
-
     // curveTightness 설정
     this.p5.curveTightness(0.5);
 
     // 둥근 사다리꼴 그리기
     this.p5.beginShape();
+
     for (let i = 0; i < trapPoints.length; i++) {
       this.p5.curveVertex(trapPoints[i].x, trapPoints[i].y);
     }
+
     // 마지막 점은 시작점을 위해 반복
     this.p5.curveVertex(trapPoints[0].x, trapPoints[0].y);
     this.p5.curveVertex(trapPoints[1].x, trapPoints[1].y);
+
     this.p5.endShape(this.p5.CLOSE);
+
+    if (idx && idx === 1) {
+      this.plotFin(p4, p3);
+    }
+  }
+
+  plotFin(lPos: p5.Vector, rPos: p5.Vector) {
+    this.p5.fill(255);
+    this.p5.noStroke();
+
+    // left fin
+    const leftFin = this.finSets(lPos, 0);
+    this.p5.beginShape();
+
+    for (let i = 0; i < leftFin.length; i++) {
+      this.p5.curveVertex(leftFin[i].x, leftFin[i].y);
+    }
+
+    // 마지막 점은 시작점을 위해 반복
+    this.p5.curveVertex(leftFin[0].x, leftFin[0].y);
+    this.p5.curveVertex(leftFin[1].x, leftFin[1].y);
+
+    this.p5.endShape(this.p5.CLOSE);
+
+    // right fin
+    const rightFin = this.finSets(rPos, 1);
+    this.p5.beginShape();
+
+    for (let i = 0; i < rightFin.length; i++) {
+      this.p5.curveVertex(rightFin[i].x, rightFin[i].y);
+    }
+
+    // 마지막 점은 시작점을 위해 반복
+    this.p5.curveVertex(rightFin[0].x, rightFin[0].y);
+    this.p5.curveVertex(rightFin[1].x, rightFin[1].y);
+
+    this.p5.endShape(this.p5.CLOSE);
+  }
+
+  finSets(pos: p5.Vector, flip: number) {
+    const dir = this.angle > 0 ? 1 : -1;
+
+    const h = 30;
+    const arg2 = this.p5.createVector(0, 0);
+    const dx = h * this.p5.cos(this.angle) * dir;
+    const dy = h * this.p5.sin(this.angle);
+    arg2.set(pos.x + dx, pos.y + dy);
+
+    // set up
+    let p1, p2, p3;
+
+    p1 = pos.copy().sub(40);
+    p2 = pos.copy().sub(0);
+    p3 = arg2.copy();
+
+    if (flip === 1) {
+      p3.add(-2);
+      if (this.angle > 0) {
+        p3.sub(-20);
+      }
+    }
+
+    // transformations
+    return [p1, p2, p3, p3];
   }
 }
 
