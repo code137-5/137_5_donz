@@ -6,6 +6,9 @@
 
 - site url 👉🏻 https://donzwhale.vercel.app/
 
+  <img width="800" alt="Screenshot 2024-07-19 at 00 45 06" src="https://github.com/user-attachments/assets/be05e81f-c3eb-4e59-9b6c-25be12bb513d">
+
+
 ## Built with
 
 - vite: ^5.3.1
