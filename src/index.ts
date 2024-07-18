@@ -19,6 +19,10 @@ function updateStars(x: number, y: number) {
   }
 }
 
+export function random(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
 const sketch = (p5: p5) => {
   p5.setup = () => {
     const canvas = p5.createCanvas(window.innerWidth, window.innerHeight);
@@ -31,7 +35,7 @@ const sketch = (p5: p5) => {
     whale.getFins();
 
     // 초기 별 생성
-    drawStars(p5, window.innerWidth);
+    drawStars(p5, window.innerWidth * 1.1);
   };
 
   p5.draw = () => {

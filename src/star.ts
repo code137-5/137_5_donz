@@ -1,8 +1,7 @@
 import p5 from "p5";
 import P5 from "p5";
-
+import { random } from ".";
 let shieldR = 90;
-let starCenterW = 2;
 let starTriW = 12;
 
 class Star {
@@ -23,22 +22,18 @@ class Star {
   constructor(p5: P5, width: number, height: number, index: number) {
     this.p5 = p5;
     this.idx = index;
-    this.pos = p5.createVector(this.random(1, width), this.random(1, height));
+    this.pos = p5.createVector(random(1, width), random(1, height));
     this.originPos = p5.createVector(this.pos.x, this.pos.y);
-    this.size = this.random(3, 5);
-    this.color = this.random(0, 255);
-    this.alpha = this.random(100, 255); // 투명도를 랜덤으로 설정
-  }
-
-  private random(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min)) + min;
+    this.size = random(3, 5);
+    this.color = random(0, 255);
+    this.alpha = random(100, 255); // 투명도를 랜덤으로 설정
   }
 
   show() {
     this.p5.fill(255);
 
     if (this.idx % 61 === 0) {
-      starVertices(this.p5, this.pos.x, this.pos.y);
+      starVertices(this.p5, this.pos.x, this.pos.y, random(1, 3));
     } else {
       this.p5.ellipse(this.pos.x, this.pos.y, this.size, this.size);
     }
@@ -71,8 +66,8 @@ class Star {
 }
 
 // 4각형 별 그리기
-const starVertices = (p5: p5, x: number, y: number) => {
-  // p5.textSize(this.random(30, 40));
+const starVertices = (p5: p5, x: number, y: number, starCenterW: number) => {
+  // p5.textSize(random(30, 40));
   // p5.text("ㅋ", this.pos.x, this.pos.y);
 
   p5.push();
