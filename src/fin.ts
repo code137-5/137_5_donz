@@ -1,5 +1,4 @@
 import p5 from "p5";
-import { random } from ".";
 
 class Fin {
   p5: p5;
