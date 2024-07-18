@@ -8,7 +8,7 @@ let whale: Whale;
 
 function drawStars(p5: p5, cnt: number) {
   for (let i = 0; i < cnt; i++) {
-    const star: Star = new Star(p5, window.innerWidth, window.innerHeight);
+    const star: Star = new Star(p5, window.innerWidth, window.innerHeight, i);
     stars.push(star);
   }
 }
