@@ -1,28 +1,33 @@
 import p5 from "p5";
 import P5 from "p5";
 
-let shieldR = 70;
+let shieldR = 90;
 let starCenterW = 2;
 let starTriW = 12;
 
 class Star {
   p5: P5;
-  x: number;
-  y: number;
-  originX: number;
-  originY: number;
+
+  idx: number;
+
+  pos: P5.Vector;
+
+  originPos: P5.Vector;
+
   size: number;
+
+  color: number;
+
   alpha: number;
-  index: number;
+
   constructor(p5: P5, width: number, height: number, index: number) {
     this.p5 = p5;
-    this.x = this.random(1, width);
-    this.y = this.random(1, height);
-    this.originX = this.x; // 초기 x 위치
-    this.originY = this.y; // 초기 y 위치
+    this.idx = index;
+    this.pos = p5.createVector(this.random(1, width), this.random(1, height));
+    this.originPos = p5.createVector(this.pos.x, this.pos.y);
     this.size = this.random(3, 5);
+    this.color = this.random(0, 255);
     this.alpha = this.random(100, 255); // 투명도를 랜덤으로 설정
-    this.index = index;
   }
 
   private random(min: number, max: number) {
@@ -32,17 +37,17 @@ class Star {
   show() {
     this.p5.fill(255);
 
-    if (this.index % 71 === 0) {
-      starVertices(this.p5, this.x, this.y);
+    if (this.idx % 61 === 0) {
+      starVertices(this.p5, this.pos.x, this.pos.y);
     } else {
-      this.p5.ellipse(this.x, this.y, this.size, this.size);
+      this.p5.ellipse(this.pos.x, this.pos.y, this.size, this.size);
     }
   }
 
   updatePosition(x: number, y: number) {
     // 고래와 별 사이의 거리 계산
-    let dx = x - this.x;
-    let dy = y - this.y;
+    let dx = x - this.pos.x;
+    let dy = y - this.pos.y;
 
     // 유클리드
     // 두 점 사이의 x 좌표와 y 좌표의 차이를 제곱하여 더한 후, 그 결과에 제곱근
@@ -54,21 +59,22 @@ class Star {
       let unitX = dx / distance;
       let unitY = dy / distance;
       // 별의 위치를 공과 반대 방향으로 조정
-      this.x -= unitX * 2;
-      this.y -= unitY * 2;
+      this.pos.sub(unitX * 2, unitY * 2);
     } else {
       // 원상복구
-      this.x += (this.originX - this.x) * 0.05;
-      this.y += (this.originY - this.y) * 0.05;
+      this.pos.add(
+        (this.originPos.x - this.pos.x) * 0.05,
+        (this.originPos.y - this.pos.y) * 0.05
+      );
     }
   }
 }
 
+// 4각형 별 그리기
 const starVertices = (p5: p5, x: number, y: number) => {
   // p5.textSize(this.random(30, 40));
-  // p5.text("ㅋ", this.x, this.y);
+  // p5.text("ㅋ", this.pos.x, this.pos.y);
 
-  // 4각형 별 그리기
   p5.push();
   p5.translate(x, y);
   p5.fill(255);
@@ -84,7 +90,7 @@ const starVertices = (p5: p5, x: number, y: number) => {
     p5.createVector(-starCenterW, -starCenterW),
   ];
 
-  // 삼각형을 위한 중앙 좌표
+  // 삼각형을 위한  좌표
   const middlePoints = [
     p5.createVector(0, starTriW), // 아래쪽 삼각형
     p5.createVector(starTriW, 0), // 오른쪽 삼각형

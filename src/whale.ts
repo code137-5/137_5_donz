@@ -2,7 +2,7 @@ import * as p5 from "p5";
 import Fin from "./fin";
 
 let segSizes = [50, 70, 70, 40, 40, 20, 20, 5, 3, 50].reverse();
-let marginSizes = [2, 2, 2, 2, 0];
+let marginSizes = [4, 2, 1, 1, 2];
 
 export default class Whale {
   p5: p5;
@@ -14,8 +14,6 @@ export default class Whale {
   speedX: number;
 
   speedY: number;
-
-  tailDirection: number;
 
   fins: Fin[];
 
@@ -29,8 +27,6 @@ export default class Whale {
     this.wPos = p5.createVector(100, 100);
     this.speedX = 0.5;
     this.speedY = 1;
-
-    this.tailDirection = 1;
 
     this.fins = [new Fin(this.p5, this.wPos.x, this.wPos.y, this._size)];
 
