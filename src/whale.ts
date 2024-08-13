@@ -1,5 +1,5 @@
 import * as p5 from "p5";
-import Fin from "./fin";
+import Segment from "./segment";
 
 let segSizes = [50, 70, 70, 40, 40, 20, 20, 5, 3, 50].reverse();
 let marginSizes = [4, 2, 1, 1, 2];
@@ -15,7 +15,7 @@ export default class Whale {
 
   speedY: number;
 
-  fins: Fin[];
+  segments: Segment[];
 
   numFin: number;
 
@@ -28,7 +28,9 @@ export default class Whale {
     this.speedX = 0.5;
     this.speedY = 1;
 
-    this.fins = [new Fin(this.p5, this.wPos.x, this.wPos.y, this._size)];
+    this.segments = [
+      new Segment(this.p5, this.wPos.x, this.wPos.y, this._size),
+    ];
 
     this.numFin = 5;
 
@@ -39,17 +41,17 @@ export default class Whale {
     this.updatePosition();
   }
 
-  getFins() {
+  getsegments() {
     for (let i = 1; i < this.numFin; i++) {
-      const { p5, pos, w } = this.fins[i - 1];
+      const { p5, pos, w } = this.segments[i - 1];
       const prevSize = i === 1 ? 0 : w;
 
-      this.fins.push(
-        new Fin(p5, pos.x + prevSize, pos.y + prevSize, this._size + i * i)
+      this.segments.push(
+        new Segment(p5, pos.x + prevSize, pos.y + prevSize, this._size + i * i)
       );
     }
 
-    this.fins.reverse();
+    this.segments.reverse();
     this.setSizes();
   }
 
@@ -57,10 +59,10 @@ export default class Whale {
     // set sizes for segments
     let trapCounter = 0;
     for (let i = this.numFin - 1; i >= 0; i--) {
-      this.fins[i].setMargin(marginSizes[i]);
+      this.segments[i].setMargin(marginSizes[i]);
 
-      this.fins[i].setFrontW(segSizes[trapCounter++]);
-      this.fins[i].setBackW(segSizes[trapCounter++]);
+      this.segments[i].setFrontW(segSizes[trapCounter++]);
+      this.segments[i].setBackW(segSizes[trapCounter++]);
     }
   }
 
@@ -83,12 +85,12 @@ export default class Whale {
       this.speedY *= -1; // y축 방향 반전
     }
 
-    this.fins.forEach((f, i) => {
+    this.segments.forEach((f, i) => {
       if (i > 0) {
-        const prevFin = this.fins[i - 1];
+        const prevFin = this.segments[i - 1];
         f.update(prevFin.pos.x, prevFin.pos.y, i === this.numFin - 1, i);
       } else {
-        this.fins[0].update(this.wPos.x, this.wPos.y);
+        this.segments[0].update(this.wPos.x, this.wPos.y);
       }
     });
   }
