@@ -32,7 +32,7 @@ const sketch = (p5: p5) => {
 
     // 고래 생성
     whale = new Whale(p5);
-    whale.getFins();
+    whale.getsegments();
 
     // 초기 별 생성
     drawStars(p5, window.innerWidth * 1.1);
@@ -48,7 +48,7 @@ const sketch = (p5: p5) => {
     whale.draw();
     whale.updatePosition();
 
-    updateStars(whale.fins[0].pos.x, whale.fins[0].pos.y);
+    updateStars(whale.segments[0].pos.x, whale.segments[0].pos.y);
   };
 };
 

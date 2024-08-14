@@ -1,6 +1,6 @@
 import p5 from "p5";
 
-class Fin {
+class Segment {
   p5: p5;
   pos: p5.Vector;
   w: number;
@@ -74,10 +74,10 @@ class Fin {
     );
 
     let p1, p2, p3, p4;
-    p1 = orig.copy(); // 왼쪽 위
-    p2 = orig.copy(); // 오른쪽 위
-    p3 = other.copy(); // 오른쪽 아래
-    p4 = other.copy(); // 왼쪽 아래
+    p1 = orig.copy(); // 왼쪽 아래
+    p2 = orig.copy(); // 오른쪽 아래
+    p3 = other.copy(); // 오른쪽 위
+    p4 = other.copy(); // 왼쪽 위
 
     p1.add(-widthFront / 2, margin);
     p2.add(widthFront / 2, margin);
@@ -119,69 +119,39 @@ class Fin {
     this.p5.endShape(this.p5.CLOSE);
 
     if (idx && idx === 1) {
-      this.plotFin(p4, p3);
+      const x = (trapPoints[2].x + trapPoints[3].x) / 2;
+      const y = (trapPoints[2].y + trapPoints[3].y) / 2;
+
+      this.plotFin(x, y, 50);
     }
   }
 
-  plotFin(lPos: p5.Vector, rPos: p5.Vector) {
-    this.p5.fill(255);
-    this.p5.noStroke();
+  plotFin(x: number, y: number, s: number) {
+    this.p5.push();
 
-    // left fin
-    const leftFin = this.finSets(lPos, 0);
+    this.p5.translate(x, y);
+    this.p5.rotate(this.angle + this.p5.radians(180));
+
     this.p5.beginShape();
 
-    for (let i = 0; i < leftFin.length; i++) {
-      this.p5.curveVertex(leftFin[i].x, leftFin[i].y);
-    }
+    this.p5.curveVertex(0, 0);
 
-    // 마지막 점은 시작점을 위해 반복
-    this.p5.curveVertex(leftFin[0].x, leftFin[0].y);
-    this.p5.curveVertex(leftFin[1].x, leftFin[1].y);
+    this.p5.curveVertex(s * 0.2, s * -0.7);
+
+    this.p5.curveVertex(s * -0.5, s * -1.5);
+
+    this.p5.curveVertex(0, 0);
+
+    this.p5.curveVertex(s * 0.2, s * 0.7);
+
+    this.p5.curveVertex(s * -0.5, s * 1.5);
+
+    this.p5.curveVertex(0, 0);
 
     this.p5.endShape(this.p5.CLOSE);
 
-    // right fin
-    const rightFin = this.finSets(rPos, 1);
-    this.p5.beginShape();
-
-    for (let i = 0; i < rightFin.length; i++) {
-      this.p5.curveVertex(rightFin[i].x, rightFin[i].y);
-    }
-
-    // 마지막 점은 시작점을 위해 반복
-    this.p5.curveVertex(rightFin[0].x, rightFin[0].y);
-    this.p5.curveVertex(rightFin[1].x, rightFin[1].y);
-
-    this.p5.endShape(this.p5.CLOSE);
-  }
-
-  finSets(pos: p5.Vector, flip: number) {
-    const dir = this.angle > 0 ? 1 : -1;
-
-    const h = 30;
-    const arg2 = this.p5.createVector(0, 0);
-    const dx = h * this.p5.cos(this.angle) * dir;
-    const dy = h * this.p5.sin(this.angle);
-    arg2.set(pos.x + dx, pos.y + dy);
-
-    // set up
-    let p1, p2, p3;
-
-    p1 = pos.copy().sub(40);
-    p2 = pos.copy().sub(0);
-    p3 = arg2.copy();
-
-    if (flip === 1) {
-      p3.add(-2);
-      if (this.angle > 0) {
-        p3.sub(-20);
-      }
-    }
-
-    // transformations
-    return [p1, p2, p3, p3];
+    this.p5.pop();
   }
 }
 
-export default Fin;
+export default Segment;
