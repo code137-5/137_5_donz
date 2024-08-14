@@ -18,7 +18,7 @@ class Segment {
     this.w = size;
     this.angle = 0;
 
-    this.segMargin = 5;
+    this.segMargin = 10;
     this.segFrontW = 20;
     this.segBackW = 10;
   }

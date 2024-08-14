@@ -1,8 +1,8 @@
 import * as p5 from "p5";
 import Segment from "./segment";
 
-let segSizes = [50, 70, 70, 40, 40, 20, 20, 5, 3, 50].reverse();
-let marginSizes = [4, 2, 1, 1, 2];
+let segSizes = [50, 70, 70, 60, 50, 30, 30, 20, 15, 5, 3, 50].reverse();
+let marginSizes = [4, 2, 2, 1, 1, 2];
 
 export default class Whale {
   p5: p5;
@@ -21,20 +21,28 @@ export default class Whale {
 
   boundary: number;
 
+  // sine wave
+  phase: number; // 사인파의 위상
+
+  amplitude: number; // 사인파의 진폭
+
+  frequency: number; // 사인파의 주파수
+
   constructor(p5: p5) {
     this.p5 = p5;
     this._size = 50;
     this.wPos = p5.createVector(100, 100);
     this.speedX = 0.5;
     this.speedY = 1;
-
     this.segments = [
       new Segment(this.p5, this.wPos.x, this.wPos.y, this._size),
     ];
+    this.numFin = 6;
+    this.boundary = -300;
 
-    this.numFin = 5;
-
-    this.boundary = 10;
+    this.phase = 0;
+    this.amplitude = 8;
+    this.frequency = 0.02;
   }
 
   draw() {
@@ -67,7 +75,7 @@ export default class Whale {
   }
 
   updatePosition() {
-    // 공 위치 업데이트
+    // 고래상어 위치 업데이트
     this.wPos.add(this.speedX, this.speedY);
 
     // 벽과의 충돌 체크
@@ -86,12 +94,23 @@ export default class Whale {
     }
 
     this.segments.forEach((f, i) => {
+      const angleOffset = i * 10; // segment마다 사인파의 오프셋을 다르게 하여 서로 다른 위치에서 시작하게 함
+      const offsetX = this.amplitude * this.p5.sin(this.phase + angleOffset);
+      const offsetY = 0; // 여기서 수직 이동은 필요 없음
       if (i > 0) {
         const prevFin = this.segments[i - 1];
-        f.update(prevFin.pos.x, prevFin.pos.y, i === this.numFin - 1, i);
+        f.update(
+          prevFin.pos.x + offsetX,
+          prevFin.pos.y + offsetY,
+          i === this.numFin - 1,
+          i
+        );
       } else {
         this.segments[0].update(this.wPos.x, this.wPos.y);
       }
     });
+
+    // sine 위상 업데이트
+    this.phase += this.frequency;
   }
 }
