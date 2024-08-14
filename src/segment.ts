@@ -18,7 +18,7 @@ class Segment {
     this.w = size;
     this.angle = 0;
 
-    this.segMargin = 5;
+    this.segMargin = 10;
     this.segFrontW = 20;
     this.segBackW = 10;
   }
@@ -99,7 +99,7 @@ class Segment {
       // 회전된 사다리꼴의 각 점을 원래 위치 this.pos로 이동
       trapPoints[i].add(this.pos);
     }
-    this.p5.fill(255, 200);
+    this.p5.fill(255);
     this.p5.noStroke();
 
     // curveTightness 설정
